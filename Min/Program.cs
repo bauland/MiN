@@ -36,8 +36,8 @@ namespace Min
                 case "Electron":
                     _ledStrip = new LedStrip(8, Electron11.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     break;
-                case "BrainpadBP2":
-                    _ledStrip = new LedStrip(8, BrainPadBP2.SpiBus.Spi2, LedStrip.ColorOrder.Bgr);
+                case "BrainPadBP2":
+                    _ledStrip = new LedStrip(8, BrainPadBP2.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     break;
                 default:
                     throw new ApplicationException($"Carte non supportée: {DeviceInformation.DeviceName}");
