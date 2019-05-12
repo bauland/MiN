@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Bauland.Others;
 using Bauland.Pins;
 using GHIElectronics.TinyCLR.Native;
@@ -32,9 +33,14 @@ namespace Min
                 case "FEZCLR":
                     _ledStrip = new LedStrip(8, FEZ.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     break;
-                default:
-                    DoEverNothing();
+                case "Electron":
+                    _ledStrip = new LedStrip(8, Electron11.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     break;
+                case "BrainpadBP2":
+                    _ledStrip = new LedStrip(8, BrainPadBP2.SpiBus.Spi2, LedStrip.ColorOrder.Bgr);
+                    break;
+                default:
+                    throw new ApplicationException($"Carte non supportée: {DeviceInformation.DeviceName}");
             }
         }
 
