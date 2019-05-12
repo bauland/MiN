@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using Bauland.Others;
 using Bauland.Pins;
 using GHIElectronics.TinyCLR.Native;
 using GHIElectronics.TinyCLR.Pins;
+// ReSharper disable FunctionNeverReturns
+// ReSharper disable StringLiteralTypo
 
 namespace Min
 {
@@ -28,10 +27,10 @@ namespace Min
             switch (DeviceInformation.DeviceName)
             {
                 case "netduino":
-                    _ledStrip = new LedStrip(8, Netduino3.SpiBus.Spi2, Netduino3.GpioPin.D10, LedStrip.ColorOrder.Bgr);
+                    _ledStrip = new LedStrip(8, Netduino3.SpiBus.Spi2, LedStrip.ColorOrder.Bgr);
                     break;
                 case "FEZCLR":
-                    _ledStrip = new LedStrip(8, FEZ.SpiBus.Spi1, FEZ.GpioPin.D10, LedStrip.ColorOrder.Bgr);
+                    _ledStrip = new LedStrip(8, FEZ.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     break;
                 default:
                     DoEverNothing();
