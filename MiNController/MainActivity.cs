@@ -12,17 +12,55 @@ namespace MiNController
     public class MainActivity : AppCompatActivity, BottomNavigationView.IOnNavigationItemSelectedListener
     {
         TextView textMessage;
+        private ListView _listView;
+        private Device[] _devices;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            CreatePseudoDevices();
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
             textMessage = FindViewById<TextView>(Resource.Id.message);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
+            _listView = FindViewById<ListView>(Resource.Id.listView1);
+            FillListView();
             navigation.SetOnNavigationItemSelectedListener(this);
         }
+
+        private void FillListView()
+        {
+            DeviceAdapter adapter=new DeviceAdapter(this,_devices);
+
+            _listView.Adapter = adapter;
+            _listView.ItemClick += _listView_ItemClick;
+        }
+
+        private void _listView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            var adapter=(DeviceAdapter)_listView.Adapter;
+            var item=adapter.GetItem(e.Position);
+        }
+
+        private void CreatePseudoDevices()
+        {
+            _devices = new[]
+            {
+                new Device()
+                {
+                    Name = "Bluetooth disable",
+                    IsSelectable = false
+                },
+                new Device()
+                {
+                    IsSelectable = true,
+                    Name = "Test",
+                    Address = "14:41:14"
+                }
+            };
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

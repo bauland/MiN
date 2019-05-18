@@ -40,14 +40,15 @@ namespace MiNController
             _initialized = true;
         }
 
-        async Task<byte[]> Read()
-        {
-            // Read data from the device
-            await _socket.InputStream.ReadAsync(buffer, 0, buffer.Length);
-        }
+        //async Task<byte[]> Read()
+        //{
+        //    // Read data from the device
+        //    await _socket.InputStream.ReadAsync(buffer, 0, buffer.Length);
+        //}
 
         async Task Write(string message)
         {
+            if (!_initialized) return;
             var buffer = UTF8Encoding.UTF8.GetBytes(message);
             // Write data to the device
             await _socket.OutputStream.WriteAsync(buffer, 0, buffer.Length);

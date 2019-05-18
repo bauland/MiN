@@ -38,8 +38,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryResponse.cs" />
-    <Compile Include="SerialBluetooth3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
