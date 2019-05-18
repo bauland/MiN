@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:p4="http://xamarin.com/mono/android/designer"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,34 +13,61 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        >
+        android:id="@+id/dataPanel" >
 
+        <GridLayout
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:rowCount="3"
+            android:columnCount="2"
+            android:id="@+id/gridLayout1">
+            <TextView
+                android:padding="10dp"
+                android:id="@+id/redLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Red:"
+            />
+            <SeekBar
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBarRed"
+                android:layout_toRightOf="@+id/redLabel"
+                android:layout_alignTop="@+id/redLabel"/>
+            <TextView
+                android:padding="10dp"
+                android:id="@+id/greenLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Green:"/>
+            <SeekBar
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBarGreen" />
+            <TextView
+                android:padding="10dp"
+                android:id="@+id/blueLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blue:"/>
+            <SeekBar
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/blueLabel" />
+        </GridLayout>
         <Button
             android:id="@+id/btn_send"
             android:text="@string/btn_send"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/seekBarRed" />
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/seekBarGreen" />
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/seekBarBlue" />
+            android:layout_height="wrap_content" 
+        />
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/title_home" />
         <ListView
             android:minWidth="25px"
             android:minHeight="25px"

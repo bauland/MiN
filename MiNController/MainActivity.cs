@@ -41,6 +41,7 @@ namespace MiNController
         {
             var adapter=(DeviceAdapter)_listView.Adapter;
             var item=adapter.GetItem(e.Position);
+            if (!item.IsSelectable) return;
         }
 
         private void CreatePseudoDevices()
