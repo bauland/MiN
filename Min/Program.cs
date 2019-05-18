@@ -13,22 +13,6 @@ using GHIElectronics.TinyCLR.Pins;
 
 namespace Min
 {
-    class Color
-    {
-        public byte Red { get; set; }
-        public byte Green { get; set; }
-        public byte Blue { get; set; }
-
-        public Color(byte red, byte green, byte blue)
-        {
-            Red = red;
-            Green = green;
-            Blue = blue;
-        }
-
-        public Color() : this(0, 0, 0) { }
-    }
-
     internal static class Program
     {
         private static byte[] _readBuffer;
