@@ -4,13 +4,12 @@ using System.Text;
 using System.Threading;
 using Bauland.Others;
 using Bauland.Pins;
-using GHIElectronics.TinyCLR.Devices.Gpio;
-using GHIElectronics.TinyCLR.Devices.Spi;
 using GHIElectronics.TinyCLR.Devices.Uart;
 using GHIElectronics.TinyCLR.Native;
 using GHIElectronics.TinyCLR.Pins;
 // ReSharper disable FunctionNeverReturns
 // ReSharper disable StringLiteralTypo
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace Min
 {
