@@ -148,7 +148,7 @@ namespace MiNController
                 _socket.Dispose();
             }
             BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(itemAddress);
-            _socket = device.CreateInsecureRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
+            _socket = device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
             _socket.Connect();
 
             Log.WriteLine(LogPriority.Info, "BT", "Socket created");
