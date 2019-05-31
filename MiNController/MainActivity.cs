@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Android.App;
 using Android.Bluetooth;
+using Android.Content;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
@@ -12,13 +13,15 @@ using Android.Widget;
 using Java.Lang;
 using Java.Util;
 using Min;
+// ReSharper disable StringLiteralTypo
+// ReSharper disable UnusedMember.Global
 
 namespace MiNController
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, BottomNavigationView.IOnNavigationItemSelectedListener
     {
-        BluetoothSocket _socket = null;
+        BluetoothSocket _socket;
         private Color _color;
         private ListView _listView;
         private Device[] _devices;
@@ -28,7 +31,7 @@ namespace MiNController
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            _color=new Color();
+            _color = new Color();
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
@@ -67,8 +70,8 @@ namespace MiNController
 
         private void _blueSeekBar_ProgressChanged(object sender, SeekBar.ProgressChangedEventArgs e)
         {
-            Log.WriteLine(LogPriority.Info,"Data",$"Blue: {e.Progress}");
-            _color.Blue = (byte) e.Progress;
+            Log.WriteLine(LogPriority.Info, "Data", $"Blue: {e.Progress}");
+            _color.Blue = (byte)e.Progress;
             UpdateColor();
         }
 
@@ -89,12 +92,12 @@ namespace MiNController
         private void UpdateColor()
         {
             ImageView iv = FindViewById<ImageView>(Resource.Id.ivColor);
-            iv.SetImageDrawable(new ColorDrawable(new Android.Graphics.Color(_color.Red,_color.Green,_color.Blue)));
+            iv.SetImageDrawable(new ColorDrawable(new Android.Graphics.Color(_color.Red, _color.Green, _color.Blue)));
         }
 
         private void FillListView()
         {
-            DeviceAdapter adapter=new DeviceAdapter(this,_devices);
+            DeviceAdapter adapter = new DeviceAdapter(this, _devices);
 
             _listView.Adapter = adapter;
             _listView.ItemClick += _listView_ItemClick;
@@ -102,7 +105,7 @@ namespace MiNController
 
         private void _button_Click(object sender, System.EventArgs e)
         {
-            Log.WriteLine(LogPriority.Info, "Data",$"Color: R:{_color.Red},G:{_color.Green},B:{_color.Blue}");
+            Log.WriteLine(LogPriority.Info, "Data", $"Color: R:{_color.Red},G:{_color.Green},B:{_color.Blue}");
             if (_socket != null)
             {
                 try
@@ -132,27 +135,40 @@ namespace MiNController
 
         private void _listView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            var adapter=(DeviceAdapter)_listView.Adapter;
-            var item=adapter.GetItem(e.Position);
-            if (!item.IsSelectable) return;
-            Log.WriteLine(LogPriority.Info, "Data", $"Connecting to {item.Name}");
-            ConnectTo(item.Name, item.Address);
-
+            var adapter = (DeviceAdapter)_listView.Adapter;
+            var item = adapter.GetItem(e.Position);
+            if (!item.IsSelectable)
+            {
+                StartActivity(new Intent(Android.Provider.Settings.ActionBluetoothSettings));
+            }
+            else
+            {
+                Log.WriteLine(LogPriority.Info, "Data", $"Connecting to {item.Name}");
+                ConnectTo(item.Address);
+            }
         }
 
-        private void ConnectTo(string itemName, string itemAddress)
+        private void ConnectTo(string itemAddress)
         {
             if (_socket != null)
             {
                 _socket.Close();
                 _socket.Dispose();
             }
-            BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(itemAddress);
-            _socket = device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
-            _socket.Connect();
 
-            Log.WriteLine(LogPriority.Info, "BT", "Socket created");
-            FindViewById<Button>(Resource.Id.btn_send).Enabled = true;
+            try
+            {
+                BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(itemAddress);
+                _socket = device.CreateRfcommSocketToServiceRecord(
+                    UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
+                _socket.Connect();
+                Log.WriteLine(LogPriority.Info, "BT", "Socket created");
+                FindViewById<Button>(Resource.Id.btn_send).Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(LogPriority.Error, "BT", ex.Message);
+            }
         }
 
         private void CreateDevicesList()
@@ -173,10 +189,11 @@ namespace MiNController
 
             int n = btAdapter.BondedDevices.Count;
             Log.WriteLine(LogPriority.Info, "BT", n.ToString());
-            _devices=new Device[n];
+            _devices = new Device[n];
             int idx = 0;
-            foreach(var bondedDevice in btAdapter.BondedDevices) { 
-                _devices[idx]=new Device(){Name = bondedDevice.Name,IsSelectable = true,Address = bondedDevice.Address};
+            foreach (var bondedDevice in btAdapter.BondedDevices)
+            {
+                _devices[idx] = new Device() { Name = bondedDevice.Name, IsSelectable = true, Address = bondedDevice.Address };
                 idx++;
             }
         }
