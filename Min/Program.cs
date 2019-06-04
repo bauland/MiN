@@ -40,12 +40,14 @@ namespace Min
                     _ledStrip = new LedStrip(size, Netduino3.SpiBus.Spi2, LedStrip.ColorOrder.Bgr);
                     break;
                 case "FEZCLR":
+                    Utility.Patch();
                     _ledStrip = new LedStrip(size, FEZ.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     break;
                 case "Electron":
                     _ledStrip = new LedStrip(size, Electron11.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     break;
                 case "BrainPadBP2":
+                    Utility.Patch();
                     _ledStrip = new LedStrip(size, BrainPad.Expansion.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
                     _serial = UartController.FromName(BrainPad.Expansion.UartPort.Usart1);
                     break;

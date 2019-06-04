@@ -1,38 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Threading;
-using Bauland.Others;
-using GHIElectronics.TinyCLR.Pins;
-// ReSharper disable FunctionNeverReturns
 
-namespace TestLeds
+namespace Min
 {
-    static class Program
+    public static class Utility
     {
-        private static LedStrip _ledStrip;
-        static void Main()
-        {
-            Patch();
-
-            _ledStrip = new LedStrip(8, BrainPad.Expansion.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
-            _ledStrip.Clear();
-            _ledStrip.Show();
-
-            while (true)
-            {
-                _ledStrip.SetAll(LedStrip.IntensityMax, 255, 255, 255);
-                _ledStrip.Show();
-                Thread.Sleep(2000);
-                _ledStrip.SetAll(LedStrip.IntensityMax, 0, 0, 255);
-                _ledStrip.Show();
-                Thread.Sleep(2000);
-                _ledStrip.Clear();
-                _ledStrip.Show();
-                Thread.Sleep(2000);
-            }
-        }
-
-        private static void Patch()
+        public static void Patch()
         {
             // BrainPad, FEZCLR
             const int MODE_ADDRESS = 0x20001438;
