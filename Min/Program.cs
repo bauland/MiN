@@ -84,8 +84,8 @@ namespace Min
             {
                 if (!string.IsNullOrEmpty(p))
                 {
-                    str = str.Trim(new[] { '\r', '\n' });
-                    var idx = str.Split(':');
+                    var setting = p.Trim(new[] { '\r', '\n' });
+                    var idx = setting.Split(':');
                     if (idx.Length == 2)
                     {
                         var variable = idx[0];
@@ -119,7 +119,7 @@ namespace Min
         {
             while (true)
             {
-                _ledStrip.SetAll(LedStrip.IntensityMax, _color.Red, _color.Green, _color.Blue);
+                _ledStrip.SetAll(LedStrip.IntensityMax/8, _color.Red, _color.Green, _color.Blue);
                 _ledStrip.Show();
                 Thread.Sleep(20);
             }
