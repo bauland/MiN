@@ -110,9 +110,9 @@ namespace MiNController
             {
                 try
                 {
-                    Send($"blue:{_color.Blue}");
-                    Send($"red:{_color.Red}");
-                    Send($"green:{_color.Green}");
+                    Send($"blue:{_color.Blue}$");
+                    Send($"red:{_color.Red}$");
+                    Send($"green:{_color.Green}$");
                 }
                 catch (Exception ex)
                 {

@@ -14,7 +14,7 @@ namespace TestLeds
         {
             Patch();
 
-            _ledStrip = new LedStrip(8, BrainPad.Expansion.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
+            _ledStrip = new LedStrip(78, BrainPad.Expansion.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
             _ledStrip.Clear();
             _ledStrip.Show();
 

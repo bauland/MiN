@@ -23,7 +23,7 @@ namespace Min
         {
 
             Setup();
-            _ledStrip.SetAll(1, 63, 63, 0);
+            _ledStrip.Clear();
             _ledStrip.Show();
 
             DoEverNothing();
@@ -31,8 +31,8 @@ namespace Min
 
         private static void Setup()
         {
-            _color = new Color();
             _readBuffer = new byte[20];
+            _color = new Color(0, 127, 255);
             int size = 8;
             switch (DeviceInformation.DeviceName)
             {
@@ -45,6 +45,7 @@ namespace Min
                     break;
                 case "Electron":
                     _ledStrip = new LedStrip(size, Electron11.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
+                    _serial = UartController.FromName(Electron11.UartPort.Uart2);
                     break;
                 case "BrainPadBP2":
                     Utility.Patch();
@@ -71,7 +72,18 @@ namespace Min
                 string str = Encoding.UTF8.GetString(_readBuffer, 0, bytesReceived);
                 if (!string.IsNullOrEmpty(str))
                 {
-                    Debug.WriteLine(str);
+                    ProcessData(str);
+                }
+            }
+        }
+
+        private static void ProcessData(string str)
+        {
+            var param = str.Split(new[] { '$' });
+            foreach (var p in param)
+            {
+                if (!string.IsNullOrEmpty(p))
+                {
                     str = str.Trim(new[] { '\r', '\n' });
                     var idx = str.Split(':');
                     if (idx.Length == 2)
@@ -107,7 +119,7 @@ namespace Min
         {
             while (true)
             {
-                _ledStrip.SetAll(LedStrip.IntensityMax,_color.Red,_color.Green,_color.Blue);
+                _ledStrip.SetAll(LedStrip.IntensityMax, _color.Red, _color.Green, _color.Blue);
                 _ledStrip.Show();
                 Thread.Sleep(20);
             }
