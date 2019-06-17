@@ -57,6 +57,8 @@ namespace MiNController
 
         protected override void OnDestroy()
         {
+            _socket.InputStream.Close();
+            _socket.OutputStream.Close();
             _socket.Close();
             _socket.Dispose();
             base.OnDestroy();
@@ -152,14 +154,19 @@ namespace MiNController
         {
             if (_socket != null)
             {
+                _socket.InputStream.Close();
+                _socket.OutputStream.Close();
                 _socket.Close();
-                _socket.Dispose();
             }
 
             try
             {
                 BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(itemAddress);
-                _socket = device.CreateRfcommSocketToServiceRecord(
+                //foreach (var uuid in device.GetUuids())
+                //{
+                //    Log.WriteLine(LogPriority.Info, "BT", uuid.ToString());
+                //}
+                _socket = device.CreateInsecureRfcommSocketToServiceRecord(
                     UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
                 _socket.Connect();
                 Log.WriteLine(LogPriority.Info, "BT", "Socket created");
@@ -167,7 +174,7 @@ namespace MiNController
             }
             catch (Exception ex)
             {
-                Log.WriteLine(LogPriority.Error, "BT", ex.Message);
+                Log.WriteLine(LogPriority.Error, "BT", ex + ", " + ex.Message);
             }
         }
 

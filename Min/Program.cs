@@ -31,9 +31,9 @@ namespace Min
 
         private static void Setup()
         {
-            _readBuffer = new byte[20];
+            _readBuffer = new byte[40];
             _color = new Color(0, 127, 255);
-            int size = 8;
+            int size = 78;
             switch (DeviceInformation.DeviceName)
             {
                 case "netduino":
