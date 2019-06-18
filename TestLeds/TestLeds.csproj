@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LedStrip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -43,12 +44,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bauland.Others.LedStrip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bauland.Others.LedStrip.1.0.1\lib\net452\Bauland.Others.LedStrip.dll</HintPath>
-    </Reference>
-    <Reference Include="Bauland.Pins, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bauland.Pins.1.0.0.3\lib\net452\Bauland.Pins.dll</HintPath>
-    </Reference>
     <Reference Include="GHIElectronics.TinyCLR.Devices.Gpio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GHIElectronics.TinyCLR.Devices.Gpio.1.0.0\lib\net452\GHIElectronics.TinyCLR.Devices.Gpio.dll</HintPath>
     </Reference>
@@ -61,10 +56,6 @@
     <Reference Include="GHIElectronics.TinyCLR.Pins, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GHIElectronics.TinyCLR.Pins.1.0.0\lib\net452\GHIElectronics.TinyCLR.Pins.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="LedStrip-Electron.jpg" />
-    <Content Include="LedStrip.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

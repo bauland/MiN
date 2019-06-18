@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\TestLeds\LedStrip.cs">
+      <Link>LedStrip.cs</Link>
+    </Compile>
     <Compile Include="Color.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="Program.cs" />
@@ -45,12 +48,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bauland.Others.LedStrip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bauland.Others.LedStrip.1.0.1\lib\net452\Bauland.Others.LedStrip.dll</HintPath>
-    </Reference>
-    <Reference Include="Bauland.Others.LedStripEffects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bauland.Others.LedStripEffects.1.0.0\lib\net452\Bauland.Others.LedStripEffects.dll</HintPath>
-    </Reference>
     <Reference Include="Bauland.Pins, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bauland.Pins.1.0.0.3\lib\net452\Bauland.Pins.dll</HintPath>
     </Reference>
@@ -69,12 +66,6 @@
     <Reference Include="GHIElectronics.TinyCLR.Pins, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GHIElectronics.TinyCLR.Pins.1.0.0\lib\net452\GHIElectronics.TinyCLR.Pins.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="LedStrip-Electron.jpg" />
-    <Content Include="LedStrip.html" />
-    <Content Include="LedStripEffects-Electron.jpg" />
-    <Content Include="LedStripEffects.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

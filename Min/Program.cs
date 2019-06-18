@@ -31,36 +31,17 @@ namespace Min
 
         private static void Setup()
         {
-            _readBuffer = new byte[40];
+            _readBuffer = new byte[30];
             _color = new Color(0, 127, 255);
-            int size = 78;
-            switch (DeviceInformation.DeviceName)
-            {
-                case "netduino":
-                    _ledStrip = new LedStrip(size, Netduino3.SpiBus.Spi2, LedStrip.ColorOrder.Bgr);
-                    break;
-                case "FEZCLR":
-                    Utility.Patch();
-                    _ledStrip = new LedStrip(size, FEZ.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
-                    break;
-                case "Electron":
-                    _ledStrip = new LedStrip(size, Electron11.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
-                    _serial = UartController.FromName(Electron11.UartPort.Uart2);
-                    break;
-                case "BrainPadBP2":
-                    Utility.Patch();
-                    _ledStrip = new LedStrip(size, BrainPad.Expansion.SpiBus.Spi1, LedStrip.ColorOrder.Bgr);
-                    _serial = UartController.FromName(BrainPad.Expansion.UartPort.Usart1);
-                    break;
-                default:
-                    throw new ApplicationException($"Carte non supportée: {DeviceInformation.DeviceName}");
-            }
+            int size = 300;
+            _ledStrip = new LedStrip(size, Electron11.SpiBus.Spi1);
+            _serial = UartController.FromName(Electron11.UartPort.Uart2);
             _serial.SetActiveSettings(9600, 8, UartParity.None, UartStopBitCount.One, UartHandshake.None);
             _serial.DataReceived += _serial_DataReceived;
             _serial.Enable();
 
             // Display memory information
-            Debug.WriteLine($"Memory free: {Memory.FreeBytes}/{Memory.UsedBytes + Memory.FreeBytes}");
+            //Debug.WriteLine($"Memory free: {Memory.FreeBytes}/{Memory.UsedBytes + Memory.FreeBytes}");
         }
 
         private static void _serial_DataReceived(UartController sender, DataReceivedEventArgs e)
@@ -119,7 +100,7 @@ namespace Min
         {
             while (true)
             {
-                _ledStrip.SetAll(LedStrip.IntensityMax/8, _color.Red, _color.Green, _color.Blue);
+                _ledStrip.SetAll(LedStrip.IntensityMax / 8, _color.Red, _color.Green, _color.Blue);
                 _ledStrip.Show();
                 Thread.Sleep(20);
             }
