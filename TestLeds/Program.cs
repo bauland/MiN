@@ -14,26 +14,35 @@ namespace TestLeds
             //Patch();
             // Display memory information
             // Debug.WriteLine($"Memory free: {Memory.FreeBytes}/{Memory.UsedBytes + Memory.FreeBytes}");
-            _ledStrip = new LedStrip(350, STM32F4.SpiBus.Spi1);
+            _ledStrip = new LedStrip(8, STM32F4.SpiBus.Spi1);
             // Display memory information
             // Debug.WriteLine($"Memory free: {Memory.FreeBytes}/{Memory.UsedBytes + Memory.FreeBytes}");
 
             _ledStrip.Clear();
             _ledStrip.Show();
 
-            byte brightness = LedStrip.IntensityMax / 8;
+            byte brightness = LedStrip.IntensityMax;
             while (true)
             {
-                _ledStrip.SetAll(brightness, 255, 255, 255);
+                _ledStrip.SetAll(brightness, 1, 1, 1);
                 _ledStrip.Show();
                 Thread.Sleep(2000);
-                _ledStrip.SetAll(brightness, 0, 0, 255);
+                _ledStrip.SetAll(brightness, 0, 0, 1);
                 _ledStrip.Show();
                 Thread.Sleep(2000);
-                _ledStrip.SetAll(brightness, 255, 0, 0);
+                _ledStrip.SetAll(brightness, 1, 0, 0);
                 _ledStrip.Show();
                 Thread.Sleep(2000);
-                _ledStrip.SetAll(brightness, 0, 255, 0);
+                _ledStrip.SetAll(brightness, 0, 1, 0);
+                _ledStrip.Show();
+                Thread.Sleep(2000);
+                _ledStrip.SetAll(brightness, 0, 1, 1);
+                _ledStrip.Show();
+                Thread.Sleep(2000);
+                _ledStrip.SetAll(brightness, 1, 0, 1);
+                _ledStrip.Show();
+                Thread.Sleep(2000);
+                _ledStrip.SetAll(brightness, 1, 1, 0);
                 _ledStrip.Show();
                 Thread.Sleep(2000);
                 _ledStrip.Clear();

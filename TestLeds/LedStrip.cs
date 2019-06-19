@@ -93,7 +93,7 @@ namespace Bauland.Others
         public void SetPixel(int index, byte brightness, byte red, byte green, byte blue)
         {
             if (index < 0 || index >= Size) throw new ArgumentOutOfRangeException(nameof(index), "n must be between 0 and Size - 1.");
-            if (brightness >= IntensityMax) throw new ArgumentOutOfRangeException(nameof(brightness), "brightness must be between 0 and IntensityMax.");
+            if (brightness > IntensityMax) throw new ArgumentOutOfRangeException(nameof(brightness), "brightness must be between 0 and IntensityMax.");
             _data[index * 4 + 4] = (byte)(brightness | 0xe0);
             _data[index * 4 + 4 + 1] = blue;
             _data[index * 4 + 4 + 2] = green;
@@ -121,7 +121,7 @@ namespace Bauland.Others
         /// <param name="blue">Value of blue for all LEDs color</param>
         public void SetAll(byte brightness, byte red, byte green, byte blue)
         {
-            if (brightness >= IntensityMax) throw new ArgumentOutOfRangeException(nameof(brightness), "brightness must be between 0 and IntensityMax.");
+            if (brightness > IntensityMax) throw new ArgumentOutOfRangeException(nameof(brightness), "brightness must be between 0 and IntensityMax.");
             for (int i = 0; i < Size; i++)
             {
                 _data[i * 4 + 4] = (byte)(brightness | 0xe0);
