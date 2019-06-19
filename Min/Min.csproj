@@ -39,7 +39,7 @@
     <Compile Include="..\TestLeds\LedStrip.cs">
       <Link>LedStrip.cs</Link>
     </Compile>
-    <Compile Include="Color.cs" />
+    <Compile Include="Animation.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

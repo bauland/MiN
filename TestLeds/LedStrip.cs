@@ -6,6 +6,22 @@ using GHIElectronics.TinyCLR.Devices.Spi;
 
 namespace Bauland.Others
 {
+    public class Color
+    {
+        public byte Red { get; set; }
+        public byte Green { get; set; }
+        public byte Blue { get; set; }
+
+        public Color(byte red, byte green, byte blue)
+        {
+            Red = red;
+            Green = green;
+            Blue = blue;
+        }
+
+        public Color() : this(0, 0, 0) { }
+    }
+
     /// <summary>
     /// Wrapper to manage LedStrip based on APA102
     /// </summary>
@@ -61,7 +77,7 @@ namespace Bauland.Others
         /// </summary>
         public void Clear()
         {
-            SetAll(0xe0, 0, 0, 0);
+            SetAll(0, 0, 0, 0);
             Show();
         }
 
@@ -77,10 +93,23 @@ namespace Bauland.Others
         public void SetPixel(int index, byte brightness, byte red, byte green, byte blue)
         {
             if (index < 0 || index >= Size) throw new ArgumentOutOfRangeException(nameof(index), "n must be between 0 and Size - 1.");
-            _data[index * 4 + 4] = (byte)(brightness|0xe0);
+            if (brightness >= IntensityMax) throw new ArgumentOutOfRangeException(nameof(brightness), "brightness must be between 0 and IntensityMax.");
+            _data[index * 4 + 4] = (byte)(brightness | 0xe0);
             _data[index * 4 + 4 + 1] = blue;
             _data[index * 4 + 4 + 2] = green;
             _data[index * 4 + 4 + 3] = red;
+        }
+
+        /// <summary>
+        /// Set color of one LED in memory. No effect on LedStrip until Show() is call.
+        /// </summary>
+        /// <param name="index">Index of LED, must be between 0 and Size - 1</param>
+        /// <param name="brightness">Brightness of LED</param>
+        /// <param name="color">Value of color for LED color</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void SetPixel(int index, byte brightness, Color color)
+        {
+            SetPixel(index, brightness, color.Red, color.Green, color.Blue);
         }
 
         /// <summary>
@@ -92,6 +121,7 @@ namespace Bauland.Others
         /// <param name="blue">Value of blue for all LEDs color</param>
         public void SetAll(byte brightness, byte red, byte green, byte blue)
         {
+            if (brightness >= IntensityMax) throw new ArgumentOutOfRangeException(nameof(brightness), "brightness must be between 0 and IntensityMax.");
             for (int i = 0; i < Size; i++)
             {
                 _data[i * 4 + 4] = (byte)(brightness | 0xe0);
@@ -99,6 +129,16 @@ namespace Bauland.Others
                 _data[i * 4 + 4 + 2] = green;
                 _data[i * 4 + 4 + 3] = red;
             }
+        }
+
+        /// <summary>
+        /// Set color of all LEDs in memory. No effect on LedStrip until Show() is call.
+        /// </summary>
+        /// <param name="brightness">Brightness for all LEDs</param>
+        /// <param name="color">Value of color for all LEDs color</param>
+        public void SetAll(byte brightness, Color color)
+        {
+            SetAll(brightness, color.Red, color.Green, color.Blue);
         }
 
         /// <summary>
