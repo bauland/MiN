@@ -135,7 +135,7 @@ namespace Min
 
         private static IAnimation ChooseAnimation(byte brightness, Color color)
         {
-            var nb = _random.Next(5);
+            var nb = _random.Next(4);
             switch (nb)
             {
                 case 0:

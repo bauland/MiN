@@ -42,7 +42,7 @@ namespace Min
 
         public AnimationNothing(Random random)
         {
-            _delay = random.Next(2000) + 2000;
+            _delay = random.Next(1500) + 1000;
         }
         public void Do()
         {
